@@ -23,7 +23,7 @@ def parse(path):
     for line in m.group(1).splitlines():
         if ":" in line:
             k, v = line.split(":", 1)
-            meta[k.strip()] = v.strip()
+            meta[k.strip()] = v.strip().strip("\"")
     return meta
 
 
@@ -44,8 +44,8 @@ def main():
             errors.append(f"{d.name}: frontmatter name '{name}' must equal folder name")
         if not NAME_RE.match(d.name) or len(d.name) > 40:
             errors.append(f"{d.name}: name must be lowercase-kebab-case, max 40 chars")
-        if not desc or len(desc) > 200 or "<" in desc or ">" in desc:
-            errors.append(f"{d.name}: description needed, max 200 chars, no angle brackets")
+        if not desc or len(desc) > 500 or "<" in desc or ">" in desc:
+            errors.append(f"{d.name}: description needed, max 500 chars, no angle brackets")
         if cat not in CATEGORIES:
             errors.append(f"{d.name}: category '{cat}' not in {CATEGORIES}")
         rows.append((cat, d.name, desc, meta.get("tags", "")))
