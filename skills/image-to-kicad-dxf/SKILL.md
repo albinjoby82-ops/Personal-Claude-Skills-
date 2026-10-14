@@ -1,7 +1,7 @@
 ---
 name: image-to-kicad-dxf
 description: Turn an image (logo, outline, silhouette, drawing) into a DXF for KiCad Edge.Cuts. Use when the user wants a custom board shape, PCB outline, or 'make this a dxf for KiCad'.
-category: ee
+category: kicad
 tags: [kicad, pcb, dxf, edge-cuts, image]
 ---
 

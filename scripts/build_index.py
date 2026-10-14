@@ -10,7 +10,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 SKILLS = ROOT / "skills"
 README = ROOT / "README.md"
 START, END = "<!-- INDEX:START -->", "<!-- INDEX:END -->"
-CATEGORIES = ["study", "ee", "git", "writing", "tools", "other"]
+CATEGORIES = ["study", "ee", "kicad", "git", "writing", "tools", "other"]
 NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
 

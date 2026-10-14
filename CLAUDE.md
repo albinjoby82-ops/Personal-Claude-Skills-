@@ -9,7 +9,7 @@ When asked to save or create a skill here, always do all of this:
    ---
    name: <name>
    description: <one sentence, max 500 chars, say when to use it. No angle brackets.>
-   category: <study|ee|git|writing|tools|other>
+   category: <study|ee|kicad|git|writing|tools|other>
    tags: [a, b, c]
    ---
    ```
