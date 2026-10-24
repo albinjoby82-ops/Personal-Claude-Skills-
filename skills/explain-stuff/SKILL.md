@@ -1,6 +1,6 @@
 ---
 name: explain-stuff
-description: Explain any concept in plain chat, ChatGPT style: bold step headings, display LaTeX maths on its own line, short text between steps, then a predict-first check question. Diagrams, formula cards and interactive widgets only when truly needed or asked for. Use whenever Albin asks to explain, teach or break down anything in EE, DE, CE, maths or any other topic.
+description: Explain any concept in plain chat, ChatGPT style, with bold step headings, display LaTeX maths on its own line, short text between steps, then a predict-first check question. Diagrams, formula cards and interactive widgets only when truly needed or asked for. Use whenever Albin asks to explain, teach or break down anything in EE, DE, CE, maths or any other topic.
 category: study
 tags: [explain, formulas, chat-format, interactive, check-questions]
 ---
