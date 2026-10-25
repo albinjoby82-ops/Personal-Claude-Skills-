@@ -16,7 +16,7 @@ Pick the row that matches what the question asks for. Every recipe names the nod
 | Frequency response / cutoff / Bode | Source value `AC 1`. `.ac dec 100 <f_low> <f_high>` · `.meas AC fc WHEN mag(V(vout))=0.7071` (for a 1 V passband) | Bode plot + Error Log |
 | Transfer curve (Vout vs Vin) | `.dc Vin <start> <stop> <step>` | plot (x-axis = Vin) |
 | Ideal op amp | `e` (VCVS) gain `1e6`: out+ = op-amp output, out− = ground, ctrl+ = non-inverting input, ctrl− = inverting input | as above |
-| VCCS (gm) | `g`, value = gm in siemens, e.g. `2202u`. Current gm·V(ctrl+, ctrl−) flows **into out+**, through the source, **out of out−** | as above |
+| VCCS (gm) | `g`, value = **minus** gm in siemens, e.g. `-2202u` (confirmed in real LTspice for the upright part wired like the sheet's figure; check against the hand value). Current gm·V(ctrl+, ctrl−) flows **into out+**, through the source, **out of out−** | as above |
 | CCCS (β·Ib) / CCVS | `f` / `h`. They sense the current through a voltage source: add a **0 V** `voltage` source `Vsense` in series with the controlling branch, arrow-direction = the sheet's Ib arrow (current into its + pin). Value of F: `Vsense <beta>` | as above |
 
 ## Units and syntax traps
