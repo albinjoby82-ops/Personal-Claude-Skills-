@@ -261,10 +261,12 @@ After writing it, reload it with trimesh and confirm every part is watertight wi
 
 Every time this skill designs something, it gets its own folder in his repo **`albinjoby82-ops/claude-made-cad-files`**: sketches, drawings, renders, STEP, print files, rebuild sheet and source. He wants this every time, without asking.
 
+**Hand the git work to a lighter subagent** (Agent tool, model haiku): attach the repo with add_repo yourself, then give the subagent the exact file list, the project README text and the commit message. GitHub chores are small; don't spend the main model's tokens on them.
+
 1. Attach the repo with `add_repo` (owner `albinjoby82-ops`, repo `claude-made-cad-files`, access `push`), then clone it.
 2. Make `projects/YYYY-MM-DD-<part-slug>/` on the first deliverable of the session, then keep updating the same folder for the rest of that session. A part redesigned in a later session gets a new dated folder.
 3. Put in it:
-   - `README.md` with frontmatter (`title`, `date`, `for`, `status`, `parts`). Body: the brief in his words, design decisions and why, key numbers, print fits, hardware, files table, open items. Lead with the mounting/hero image.
+   - `README.md` with frontmatter (`title`, `description`, `date`, `for`, `status`, `parts`). Body: the one-line description of what it is first, then the brief in his words, design decisions and why, key numbers, print fits, hardware, files table, open items. Lead with the mounting/hero image.
    - `step/` (every printed part + a `_REF` assembly), `print/` (STL/3MF oriented for printing), `drawings/` (numbered in order: `00_reference_photo`, sketches, drawings, renders), `rebuild.md`, `source/` (the model and every script used).
 4. Run `python3 scripts/build_index.py`, which rewrites the project table in the root README.
 5. Commit with message `Add <part>` (or `Update <part>`) and push. Tell him the folder name in one line.
