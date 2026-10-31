@@ -19,8 +19,8 @@ if hasattr(part, 'part'): part = part.part          # BuildPart object passed by
 bb = part.bounding_box(); size = bb.size
 vol_mm3 = part.volume
 print(f"bbox X {size.X:.2f}  Y {size.Y:.2f}  Z {size.Z:.2f} mm   (min {bb.min.X:.1f},{bb.min.Y:.1f},{bb.min.Z:.1f})")
-print(f"volume {vol_mm3/1000:.2f} cm3   mass ~{vol_mm3/1000*args.density:.1f} g at {args.density} g/cm3")
-print(f"faces {len(part.faces())}  edges {len(part.edges())}  solids {len(part.solids())}")
+print(f"volume {vol_mm3/1000:.2f} cm3   mass ~{vol_mm3/1000*args.density:.1f} g solid at {args.density} g/cm3")
+print(f"faces {len(part.faces())}  edges {len(part.edges())}  solids {len(part.solids())}  valid {part.is_valid}")
 if len(part.solids()) > 1: print("WARNING: more than one solid — did a cut or boolean miss?")
 
 def view_png(shape, direction, up, path, px=400):
@@ -50,7 +50,10 @@ print('preview', out_png, '(iso | top | front | right)')
 if args.final:
     export_step(part, f"{args.outdir}/{args.name}.step")
     export_stl(part, f"{args.outdir}/{args.name}.stl", tolerance=0.02, angular_tolerance=0.1)
-    m = Mesher(); m.add_shape(part); m.write(f"{args.outdir}/{args.name}.3mf")
+    try:
+        m = Mesher(); m.add_shape(part); m.write(f"{args.outdir}/{args.name}.3mf")
+    except RuntimeError as e:
+        print('3mf skipped:', e, '-> build it from the STL with scripts/bambu_3mf.py')
     for sname, sk in ns.get('sketches', {}).items():
         sk = sk.sketch if hasattr(sk, 'sketch') else sk
         ex = ExportDXF(unit=Unit.MM); ex.add_layer('0'); ex.add_shape(sk, layer='0')
