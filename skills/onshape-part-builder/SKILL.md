@@ -266,7 +266,8 @@ Every time this skill designs something, it gets its own folder in his repo **`a
 1. Attach the repo with `add_repo` (owner `albinjoby82-ops`, repo `claude-made-cad-files`, access `push`), then clone it.
 2. Make `projects/YYYY-MM-DD-<part-slug>/` on the first deliverable of the session, then keep updating the same folder for the rest of that session. A part redesigned in a later session gets a new dated folder.
 3. Put in it:
-   - `README.md` with frontmatter (`title`, `description`, `date`, `for`, `status`, `parts`). Body: the one-line description of what it is first, then the brief in his words, design decisions and why, key numbers, print fits, hardware, files table, open items. Lead with the mounting/hero image.
+   - `README.md` with frontmatter (`title`, `description`, `date`, `for`, `status`, `parts`). Body: the one-line description, the hero image, then **the whole design process prompt by prompt**: a numbered step for every request he made, quoting his words (lightly tidied), what Claude did in 2–4 bullets, and the sketch or render from that step, including failed tries marked ❌ and the final marked ✅. Then the final design table, fits, printing, hardware, files table and open items.
+   - Save a picture at **every** step as you go (sketches, renders, his screenshots and uploads), numbered in order in `drawings/`, so the story can be told later. Don't overwrite an earlier step's picture with a later version; give it a new number.
    - `step/` (every printed part + a `_REF` assembly), `print/` (STL/3MF oriented for printing), `drawings/` (numbered in order: `00_reference_photo`, sketches, drawings, renders), `rebuild.md`, `source/` (the model and every script used).
 4. Run `python3 scripts/build_index.py`, which rewrites the project table in the root README.
 5. Commit with message `Add <part>` (or `Update <part>`) and push. Tell him the folder name in one line.
