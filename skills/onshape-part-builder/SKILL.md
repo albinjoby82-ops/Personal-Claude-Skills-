@@ -135,6 +135,8 @@ Setup once: `pip install build123d cairosvg pillow shapely matplotlib trimesh rt
 - **`bd.Mesher` can raise "3mf mesh is invalid"** even on usable parts. Fall back to the 3MF writer in section 7, fed from the STLs.
 - Verify meshes with trimesh: `is_watertight`, plus `mesh.section(...)` areas at a few heights to prove each layer is what you expect.
 - **Slots:** `SlotCenterToCenter(center_separation=L-w, height=w)` in a sketch, or `SlotOverall(width=L, height=w)`. Rotate with `Rotation`/`Locations` for vertical slots.
+- **Side profiles:** sketch on `bd.Plane.XZ` (local x→X, local y→Z), add `fillet()` on picked vertices inside the BuildSketch, then `extrude(..., both=True)`. Fluid shapes come from sketch fillets, not 3D fillets, which fail far more often.
+- **A 3D fillet that says `TopOpeBRepDS_DataStructure` failed because two features touch** (a window cutting into a step, say). Move the feature; don't just drop the fillet.
 
 ### Route A: staged parametric build
 Mirror the plan in **build123d** (Python, OpenCascade kernel, exports true STEP). Use one script, built one stage at a time in the same feature order as the plan, so the code reads like the feature tree.
@@ -151,6 +153,8 @@ Each stage message to him is the whole update:
 - the preview image
 - 1–2 lines: what was added, and any number you chose
 - a question **only if** the next stage depends on something he hasn't decided
+
+**Pictures that look like CAD.** matplotlib 3D sorts triangles badly. For assembly, exploded and iso views, export meshes to JSON and render them with three.js in headless Chromium (orthographic camera, standard material, black `EdgesGeometry` at 28°), then screenshot with Playwright (`--use-angle=swiftshader`). Serve the folder with `python3 -m http.server`. **Engineering drawings:** `shape.project_to_viewport()` for front (X,Z), top (X,Y) and right (Y,Z), drawn into your own SVG with visible lines solid and hidden lines dashed, plus centre lines, red dimension lines with arrows, leader notes and a title block (qty, material, print orientation, fits, hardware). Embed the iso renders in the sheet. Working copies of all of these scripts are in the last project's `source/` folder in his CAD repo (section 10), so copy them; don't rewrite them.
 
 Group stages as base body → cutouts/holes → shell/pockets → fillets/chamfers → final. Don't preview every fillet; group small operations. Three to five previews is normal for a bracket; a case might be six.
 
@@ -183,6 +187,8 @@ Run through this on the final preview and state the result in a few words, not a
 - Mass and print time estimate. Solid mass = volume × 1.24 g/cm³ for PLA (1.27 for PETG); a real print at 15% infill comes to roughly 35–45% of that. Time ≈ 1 h per 10 g at 0.2 mm as a rough figure.
 - Does every fixed dimension from intake appear in the model? Re-check them against the source.
 - VEX parts: every mounting hole on the 12.7 grid? Span rule (3b) met? Clearance over wheels/motors ≥ 3 mm?
+- **Clash check, not eyeballing:** for every pair of mating parts, `(a & b).volume` must be 0. Anything adjustable (slots, telescopes) is checked at **both ends of its range and the middle**. On the brace, a concave fillet clashed only at +5 mm.
+- **Print fits are in the model, not left to the slicer:** #8-32 holes/slots 4.6, M3 3.4, nut traps +0.4 across flats and +0.4 deep, spinning 1/8" square shaft Ø5.0, parts between flanges 0.2 per side, rotating wheels 0.6 per side.
 
 If something fails, fix it in the model; don't just warn.
 
@@ -250,6 +256,20 @@ After writing it, reload it with trimesh and confirm every part is watertight wi
 - Reuse the model file: edit the stage rather than regenerating the whole script in chat. Show code only when he asks.
 - Look up datasheet numbers once, record them in the plan, and don't re-search.
 - Read reference files only when needed, and only if they exist: the cheatsheet before the first build in a session, onshape-routes only for B/C, fdm-rules only for unusual geometry.
+
+## 10. Archive every project to GitHub (always)
+
+Every time this skill designs something, it gets its own folder in his repo **`albinjoby82-ops/claude-made-cad-files`**: sketches, drawings, renders, STEP, print files, rebuild sheet and source. He wants this every time, without asking.
+
+1. Attach the repo with `add_repo` (owner `albinjoby82-ops`, repo `claude-made-cad-files`, access `push`), then clone it.
+2. Make `projects/YYYY-MM-DD-<part-slug>/` on the first deliverable of the session, then keep updating the same folder for the rest of that session. A part redesigned in a later session gets a new dated folder.
+3. Put in it:
+   - `README.md` with frontmatter (`title`, `date`, `for`, `status`, `parts`). Body: the brief in his words, design decisions and why, key numbers, print fits, hardware, files table, open items. Lead with the mounting/hero image.
+   - `step/` (every printed part + a `_REF` assembly), `print/` (STL/3MF oriented for printing), `drawings/` (numbered in order: `00_reference_photo`, sketches, drawings, renders), `rebuild.md`, `source/` (the model and every script used).
+4. Run `python3 scripts/build_index.py`, which rewrites the project table in the root README.
+5. Commit with message `Add <part>` (or `Update <part>`) and push. Tell him the folder name in one line.
+
+If the repo can't be reached, say so in one line and keep the folder ready to push. Don't skip the rest of the job.
 
 ## 9. Script: scripts/cad_run.py
 
