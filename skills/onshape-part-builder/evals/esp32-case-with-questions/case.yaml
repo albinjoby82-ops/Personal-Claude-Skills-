@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: esp32-case-with-questions
+expected_outcome: |
+  Claude asks at most 4 targeted intake questions (board variant / exact dims, fixing method, which side the USB is on, lid or open-top), looks up or states ESP32 devkit dimensions used, then proposes a numbered Onshape feature plan with a variables table (including #wall) and 1-2 alternatives, and waits for approval before building. If it builds, it does so in stages with a preview per stage and finishes with STEP, STL/3MF, DXF per sketch and a rebuild sheet.

@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: nema17-motor-family
+expected_outcome: |
+  Claude recognises this is a part family and offers route C (FeatureScript custom feature) alongside the default route A, uses correct NEMA 17 dimensions (31 mm hole square, 22 mm pilot, M3) and states them, plans the L-bracket with a variables table (plate length as a variable), asks about the mounting plate thickness / which leg is on the bed, and builds in stages with previews; deliverables include STEP, STL, DXF, rebuild sheet and a .fs file (or a clear offer of one).
