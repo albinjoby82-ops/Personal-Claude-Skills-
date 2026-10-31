@@ -1,8 +1,8 @@
 ---
 name: onshape-part-builder
-description: "Use Claude as the CAD tool: Albin describes a 3D-printed part, sign or plaque and Claude designs it (mockup, plan, staged build, print check, files): Onshape rebuild sheet, STEP, STL, Bambu multi-colour 3MF. Use for any bracket, mount, case, sign, keyring, holder or 'design/model/print this'."
+description: "Use Claude as the CAD tool: Albin describes a 3D-printed part, sign or plaque and Claude designs it (mockup, plan, staged build, print check, files): Onshape rebuild sheet, STEP, STL, Bambu multi-colour 3MF. Use for any bracket, mount, case, sign, keyring, holder, VEX/robot brace or 'design/model/print this'."
 category: tools
-tags: [cad, onshape, 3d-printing, build123d, featurescript, step, dxf, bambu, multicolour, signs]
+tags: [cad, onshape, 3d-printing, build123d, featurescript, step, dxf, bambu, multicolour, signs, vex, robotics]
 ---
 
 # Onshape Part Builder: describe a part, get an editable model
@@ -41,14 +41,14 @@ Read everything he gave first (text, photo, sketch, datasheet, Onshape link). Th
 
 1. **Function and mating parts.** What does it hold, attach to or sit in? Which faces touch other things? (This decides the base shape.)
 2. **Critical dimensions**, and which are *fixed* (must match a real part) and which are *free* (Claude can choose). Ask for a photo with a ruler, a datasheet, or the Onshape part it mates with.
-3. **Fasteners and joints.** M3 screws? Heat-set inserts? Snap-fit? Press-fit? Zip-tie slots? Default for his robotics work: M3 clearance 3.4 mm, M3 heat-set insert hole 4.0 mm × 5.7 mm deep.
+3. **Fasteners and joints.** M3 screws? Heat-set inserts? Snap-fit? Press-fit? Zip-tie slots? Default for his robotics work: M3 clearance 3.4 mm, M3 heat-set insert hole 4.0 mm × 5.7 mm deep. On VEX structure the default is #8-32 (see section 3b).
 4. **Print setup.** Default: Bambu with AMS, PLA or PETG, 0.4 mm nozzle, 0.2 mm layers. This decides wall thickness and overhang rules.
 5. **Which numbers he'll want to tweak later.** Those become Onshape variables (`#wall`, `#hole_d`, `#length`).
 6. **Where it's going:** GaelForce robot, Micromouse, FS accumulator, a lab bench, an event table. This tells you load and environment (vibration, heat, hands).
 
 For a sign the only real questions are size, thickness, colours, text, and **stand or lie flat**.
 
-For known hardware (NEMA 17, ESP32 dev boards, 608 bearings, Raspberry Pi, VEX parts, common sensors), look the dimensions up rather than asking, and **state the numbers used** so he can correct them. Wrong reference dims are the number one reason printed parts don't fit.
+For known hardware (NEMA 17, ESP32 dev boards, 608 bearings, Raspberry Pi, VEX parts, common sensors), look the dimensions up rather than asking, and **state the numbers used** so he can correct them. Wrong reference dims are the number one reason printed parts don't fit. VEX numbers are recorded in section 3b; use those without re-searching.
 
 Don't ask about things that don't matter yet (infill, exact fillet radii). Pick a sensible default and say so.
 
@@ -96,6 +96,34 @@ Design rules that go into the plan (full list in `references/fdm-rules.md` if pr
 - Clearance fit 0.2–0.3 mm per side; press-fit −0.1 mm; sliding 0.4 mm. A slot for an 8 mm plate is 8.4 mm.
 - Fillet vertical edges (free strength, prints fine); avoid fillets on the bed-contact edge (elephant's foot).
 
+## 3b. VEX / robot structural parts (GaelForce, VEX U)
+
+Anything that bolts to VEX structure uses these numbers. State them in the plan so he can correct any that his kit differs on.
+
+**VEX reference dimensions (mm, from the 0.5" grid)**
+- Hole pitch **12.7** on every channel, plate and bar. Holes are **square, 4.6** across (0.182"). Put every mounting hole on this pitch or it won't line up.
+- Screws **#8-32**: major Ø 4.17 → printed clearance hole **4.4** (4.6 if it must slide); head Ø ≈ 7.0, so counterbore 7.4 × 3.5 deep. Nut: 8.7 across flats (nylock a touch taller, 6.4 vs 4.8 high). Nut-trap hex 9.0 A/F, 5.0 deep.
+- C-channel cross-sections (outside): **1×2×1" = 25.4 wide × 50.8 tall**, 1×3×1" = 25.4 × 76.2, **1×5×1" = 25.4 × 127**. Flanges 25.4 deep. Aluminium wall **≈ 1.6** (1/16"), steel ≈ 1.2. The holes in the web and both flanges are all on the same 12.7 grid, so the first hole centre is 6.35 in from an edge.
+- Shafts: **3.18 square** (1/8") and 6.35 square high-strength (1/4"). A printed square shaft hole is 3.4 / 6.6 (sliding) or 3.25 / 6.45 (press). Bearing flat: 1 × 3 holes, 12.7 pitch, shaft hole centred.
+- Wheels (nominal Ø): 2.75" = **69.9**, 3.25" = **82.6**, 4" = **101.6**. Omni wheels are the same, about 25 wide for the standard ones. Add ≥ 3 mm radial clearance under anything that passes over a wheel.
+- V5 Smart Motor, V5 Rotation Sensor, 5.5 W motor: **measure or look up and state** the body size before using it; don't guess. The 11 W motor is roughly a 51 × 44 × 42 box plus the cartridge; the Rotation sensor is roughly a 1.5" square with shaft on the 12.7 grid.
+
+**Adjustable mounts (he asks for "±N mm each end" a lot)**
+- Default: **slotted ends, one part.** Slot width 4.6, slot length = 4.6 + 2N (so ±5 mm → 14.6), slot centred on the nominal hole, two slots per end on 12.7 pitch (second slot gives it a second screw and stops rotation). Add a counterbore the full slot length if the head would sit proud.
+- Alternative (only when range > ±8 mm or the span must shrink/grow in use): **two-piece telescoping** bar with a clamp screw and serrated/ribbed faces. State the cost in one line: a joint in the middle of a loaded brace is a flex point in PLA.
+- Mention a third option only if he's unhappy with both: separate printed adaptor plates with the slots, bar stays plain.
+
+**Span and stiffness rule for bars and braces**
+- Flat plate < 100 mm span: 4–5 thick is fine.
+- 100–150 mm: give it a lip, L-section ≥ 12 tall × 2.4 wall.
+- **> 150 mm: U, T or I section, ≥ 15 tall, ≥ 2.4 walls**, or print it at 100% infill and 6+ perimeters. A flat printed bar over a drivetrain will flex and let the wheel wander.
+- Longest flat print ≈ 250 along a plate edge or ≈ 350 on the diagonal. If the span is longer, split it at a hole position with a lap joint and 2 × #8-32, and say so.
+- Load path: screws should be in shear, not pulling on layer lines. Print bars lying flat so the long axis is in the XY plane.
+
+**Motors and things in the way**
+- When a brace has to pass over a motor, wheel or gear, get the obstruction's height and width *first* (photo with a ruler is enough), then plan a **step or arch** with ≥ 3 mm clearance rather than a straight bar. Put the step vertical faces at 45° chamfers so it prints flat with no supports.
+- Odometry / tracking-wheel pods: the wheel axle and encoder shaft must share the 12.7 grid with the channel holes, so the pod can be dropped in and bolted without new holes. Leave a 4.6 slot for the pod's spring/pivot if it's a drop-down pod.
+
 ## 4. Build stage by stage, preview every stage
 
 Setup once: `pip install build123d cairosvg pillow shapely matplotlib trimesh rtree --break-system-packages -q`. It takes a couple of minutes the first time, so say so. build123d installs fine on Python 3.10–3.13; if it fails, say so once and fall back to CadQuery (`pip install cadquery`) with the same plan rather than looping on installs. Read `references/build123d-cheatsheet.md` before the first build if it exists.
@@ -104,8 +132,9 @@ Setup once: `pip install build123d cairosvg pillow shapely matplotlib trimesh rt
 - **`import build123d as bd`** whenever shapely is also in the script. `from build123d import *` shadows shapely's `Polygon` and fails with "Expected floats".
 - **Extrude direction follows the face normal.** A clockwise outline (common after shapely ops or a y-flip) extrudes *downward*. Pass `bd.extrude(face, amount=dz, dir=(0, 0, 1))`.
 - **Booleans on many-island slabs can fail silently.** A fuse can drop a whole slab, and a cut can return an invalid solid. After every boolean, check `volume`, the z-range of the bounding box and `is_valid`. Prefer **fuse** (base slab + top-layer black slab) over cutting many pockets, and use `.fix()` if `is_valid` is False.
-- **`bd.Mesher` can raise "3mf mesh is invalid"** even on usable parts. Fall back to the 3MF writer in section 7 (`scripts/bambu_3mf.py`), fed from the STLs.
+- **`bd.Mesher` can raise "3mf mesh is invalid"** even on usable parts. Fall back to the 3MF writer in section 7, fed from the STLs.
 - Verify meshes with trimesh: `is_watertight`, plus `mesh.section(...)` areas at a few heights to prove each layer is what you expect.
+- **Slots:** `SlotCenterToCenter(center_separation=L-w, height=w)` in a sketch, or `SlotOverall(width=L, height=w)`. Rotate with `Rotation`/`Locations` for vertical slots.
 
 ### Route A: staged parametric build
 Mirror the plan in **build123d** (Python, OpenCascade kernel, exports true STEP). Use one script, built one stage at a time in the same feature order as the plan, so the code reads like the feature tree.
@@ -153,6 +182,7 @@ Run through this on the final preview and state the result in a few words, not a
 - Stray colour islands or specks removed? Every part watertight?
 - Mass and print time estimate. Solid mass = volume × 1.24 g/cm³ for PLA (1.27 for PETG); a real print at 15% infill comes to roughly 35–45% of that. Time ≈ 1 h per 10 g at 0.2 mm as a rough figure.
 - Does every fixed dimension from intake appear in the model? Re-check them against the source.
+- VEX parts: every mounting hole on the 12.7 grid? Span rule (3b) met? Clearance over wheels/motors ≥ 3 mm?
 
 If something fails, fix it in the model; don't just warn.
 
@@ -176,8 +206,6 @@ Reply in 3–6 lines: what it is, overall size, mass, the one assumption most li
 ## 7. Bambu Studio 3MF with colours pre-assigned
 
 He found clicking colour regions in the Bambu viewport painful: lots of tiny loose islands, and part names lost. So for anything multi-colour, ship **one object with named parts and filament slots set**, for example slot 1 black, 2 white, 3 pink, 4 red. Always ship a backup zip of per-colour STLs too. With those he drags all of them in at once, answers **Yes** to "single object with multiple parts", then picks each part by *name* in the object list rather than in the 3D view. This writer hasn't been confirmed in Bambu yet. If he reports a problem, fix it and note here what changed.
-
-The writer is `scripts/bambu_3mf.py` (`bambu_3mf(path, obj_name, [(name, trimesh_mesh, slot), ...])`). If it isn't on disk, write it from this listing:
 
 ```python
 import zipfile, numpy as np
@@ -283,7 +311,7 @@ if args.final:
     try:
         m = Mesher(); m.add_shape(part); m.write(f"{args.outdir}/{args.name}.3mf")
     except RuntimeError as e:
-        print('3mf skipped:', e, '-> build it from the STL with scripts/bambu_3mf.py')
+        print('3mf skipped:', e, '-> build it from the STL with the section 7 writer')
     for sname, sk in ns.get('sketches', {}).items():
         sk = sk.sketch if hasattr(sk, 'sketch') else sk
         ex = ExportDXF(unit=Unit.MM); ex.add_layer('0'); ex.add_shape(sk, layer='0')
