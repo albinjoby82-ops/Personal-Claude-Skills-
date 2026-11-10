@@ -1,0 +1,5 @@
+{"title":"Sketch 1: Base profile (Top plane)",
+ "shapes":[{"type":"rect","c":[0,0],"w":60,"h":24,"r":3},{"type":"circle","c":[22,0],"d":4.3},{"type":"circle","c":[-22,0],"d":4.3},
+  {"type":"slot","a":[-6,0],"b":[6,0],"w":5},{"type":"line","a":[0,-16],"b":[0,16],"construction":true}],
+ "dims":[{"type":"h","a":[-30,-12],"b":[30,-12],"off":-9,"label":"#len = 60"},{"type":"v","a":[30,-12],"b":[30,12],"off":9,"label":"#wid = 24"},
+  {"type":"h","a":[0,0],"b":[22,0],"off":18,"label":"#pitch/2 = 22"},{"type":"dia","c":[-22,0],"d":4.3,"ang":135,"label":"dia #hole = 4.3"}]}

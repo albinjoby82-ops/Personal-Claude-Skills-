@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="407" viewBox="0 0 720 407" font-family="Helvetica,Arial,sans-serif" font-size="13">
+<rect width="100%" height="100%" fill="#fff"/>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#0b62c4"/></marker></defs>
+<text x="20" y="24" font-size="15" font-weight="bold" fill="#111">Sketch 1: Base profile (Top plane)</text>
+<rect x="150.0" y="136.52" width="365.22" height="146.09" rx="18.26" fill="none" stroke="#111" stroke-width="2"/>
+<circle cx="466.52" cy="209.57" r="13.09" fill="none" stroke="#111" stroke-width="2"/>
+<path d="M462.52,209.57 h8 M466.52,205.57 v8" stroke="#888" stroke-width="1"/>
+<circle cx="198.7" cy="209.57" r="13.09" fill="none" stroke="#111" stroke-width="2"/>
+<path d="M194.7,209.57 h8 M198.7,205.57 v8" stroke="#888" stroke-width="1"/>
+<path d="M296.09,194.35 L369.13,194.35 A15.22,15.22 0 0 1 369.13,224.78 L296.09,224.78 A15.22,15.22 0 0 1 296.09,194.35 z" fill="none" stroke="#111" stroke-width="2"/>
+<line x1="332.61" y1="306.96" x2="332.61" y2="112.17" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="6 4"/>
+<circle cx="332.61" cy="209.57" r="3.5" fill="#c0392b"/><text x="338.61" y="224.57" fill="#c0392b" font-size="11">origin</text>
+<line x1="150.0" y1="282.61" x2="150.0" y2="337.39" stroke="#0b62c4" stroke-width="1.1" opacity="0.6"/>
+<line x1="515.22" y1="282.61" x2="515.22" y2="337.39" stroke="#0b62c4" stroke-width="1.1" opacity="0.6"/>
+<line x1="150.0" y1="337.39" x2="515.22" y2="337.39" stroke="#0b62c4" stroke-width="1.1" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<g><rect x="297.2" y="319.39" width="70.8" height="17" fill="#fff" opacity="0.85"/><text x="332.61" y="332.39" fill="#0b62c4" text-anchor="middle">#len = 60</text></g>
+<line x1="515.22" y1="282.61" x2="570.0" y2="282.61" stroke="#0b62c4" stroke-width="1.1" opacity="0.6"/>
+<line x1="515.22" y1="136.52" x2="570.0" y2="136.52" stroke="#0b62c4" stroke-width="1.1" opacity="0.6"/>
+<line x1="570.0" y1="282.61" x2="570.0" y2="136.52" stroke="#0b62c4" stroke-width="1.1" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<g transform="rotate(-90 564.0 209.565)"><rect x="528.6" y="196.565" width="70.8" height="17" fill="#fff" opacity="0.85"/><text x="564.0" y="209.565" fill="#0b62c4" text-anchor="middle">#wid = 24</text></g>
+<line x1="332.61" y1="209.57" x2="332.61" y2="100.0" stroke="#0b62c4" stroke-width="1.1" opacity="0.6"/>
+<line x1="466.52" y1="209.57" x2="466.52" y2="100.0" stroke="#0b62c4" stroke-width="1.1" opacity="0.6"/>
+<line x1="332.61" y1="100.0" x2="466.52" y2="100.0" stroke="#0b62c4" stroke-width="1.1" marker-start="url(#ar)" marker-end="url(#ar)"/>
+<g><rect x="349.8" y="82.0" width="99.6" height="17" fill="#fff" opacity="0.85"/><text x="399.565" y="95.0" fill="#0b62c4" text-anchor="middle">#pitch/2 = 22</text></g>
+<line x1="165.4" y1="176.3" x2="189.44" y2="200.31" stroke="#0b62c4" stroke-width="1.1" marker-end="url(#ar)"/>
+<line x1="165.4" y1="176.3" x2="125.4" y2="176.3" stroke="#0b62c4" stroke-width="1.1"/>
+<g><rect x="118.4" y="167.3" width="114.0" height="17" fill="#fff" opacity="0.85"/><text x="121.4" y="180.3" fill="#0b62c4" text-anchor="end">dia #hole = 4.3</text></g>
+</svg>
